@@ -5,10 +5,11 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 
 const TodosList = ({todos,setTodos,setEditTodo}) => {
-  const handleComplete= ()=> {
+  const handleComplete= (todo)=> {
+    
     setTodos(
       todos.map((item)=> {
-        if (item.id===todos.id)
+        if (item.id===todo.id)
           return {...item, completed:!item.completed} ;
         else
          return item;
@@ -38,8 +39,9 @@ const handleEdit=( {id })=> {
               <div>
                 <button className="button-complete task-button" onClick={()=> handleComplete(todo)}>
               
-                {todo.completed ? <RiCheckboxCircleFill /> : <MdOutlineCheckBoxOutlineBlank /> }
+                 {todo.completed ? <RiCheckboxCircleFill /> : <MdOutlineCheckBoxOutlineBlank /> }
                 </button>
+
                 <button 
                      className="button-edit task-button"
                      onClick={()=> handleEdit(todo)}

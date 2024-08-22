@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const Form = ({ input, setInput, todos, setTodos,editTodo,setEditTodo }) => {
    
     const updateTodo=(title,id,completed)=> {
-        const newTodo= todos.map((todo)=> {
-            todo.id===id ? {title,id,completed} : todo;
-        });
-        setTodos(newTodo);
+        const newTodos = todos.map((todo) =>
+            todo.id === id ? { ...todo, title, completed } : todo
+        );
+        
+        setTodos(newTodos);
         setEditTodo("");
+        setInput("")
     }
 
     useEffect(()=>{
@@ -16,7 +19,7 @@ const Form = ({ input, setInput, todos, setTodos,editTodo,setEditTodo }) => {
             setInput(editTodo.title);
         else 
          setInput("");
-    },[editTodo]);
+    },[editTodo,setInput]);
 
     const onInputChange = (event) => {
         setInput(event.target.value);
@@ -25,7 +28,7 @@ const Form = ({ input, setInput, todos, setTodos,editTodo,setEditTodo }) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
        if (!editTodo)
-        { setTodos([...todos, { id: Date.now().toString(), title: input, completed: false }]);
+        { setTodos([...todos, { id: uuidv4(), title: input, completed: false }]);
         setInput("");
         }
         else {
